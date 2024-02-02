@@ -17,12 +17,9 @@ public class DeliverBoyService {
     @KafkaListener(topics = "notification-update", groupId = "notification-send")
     public void receiveNotification(String notification){
     log.info(notification);
+    this.kafkaTemplate.send(KafkaConstants.LOCATION_UPDATE, "Sending the live location");
     }
 
-    public boolean liveLocation(String location){
-      this.kafkaTemplate.send(KafkaConstants.LOCATION_UPDATE, location);
-      return true;
-    }
 
     @KafkaListener(topics = "customer-topic", groupId = "customer-respone")
     public void customerresponse(String update){
